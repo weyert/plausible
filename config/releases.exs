@@ -1,7 +1,9 @@
 import Config
+# use Mix.Config
 
 secret_key_base = System.fetch_env!("SECRET_KEY_BASE")
 database_url = System.fetch_env!("AVIEN_DATABASE_URL")
+pool_size = System.fetch_env!("POOL_SIZE")
 app_port = System.fetch_env!("PORT")
 google_client_id = System.fetch_env!("GOOGLE_CLIENT_ID")
 google_client_secret = System.fetch_env!("GOOGLE_CLIENT_SECRET")
@@ -11,8 +13,6 @@ twitter_consumer_secret = System.fetch_env!("TWITTER_CONSUMER_SECRET")
 twitter_consumer_key = System.fetch_env!("TWITTER_CONSUMER_KEY")
 twitter_token = System.fetch_env!("TWITTER_ACCESS_TOKEN")
 twitter_token_secret = System.fetch_env!("TWITTER_ACCESS_TOKEN_SECRET")
-
-use Mix.Config
 
 # For production, don't forget to configure the url host
 # to something meaningful, Phoenix uses this information
@@ -24,8 +24,8 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :plausible, PlausibleWeb.Endpoint,
-  http: [:inet6, port: System.get_env("PORT") || 4000],
-  url: [host: System.get_env("HOST"), scheme: "https", port: 443],
+  http: [:inet6, port: System.fetch_env("PORT") || 4000],
+  url: [host: System.fetch_env("HOST"), scheme: "https", port: 443],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
@@ -39,7 +39,7 @@ config :plausible, PlausibleWeb.Endpoint,
 # Configure your database
 config :plausible, Plausible.Repo,
   adapter: Ecto.Adapters.Postgres,
-  url: database_url
+  url: database_url,
   pool_size: 10,
   timeout: 10_000,
   ssl: true

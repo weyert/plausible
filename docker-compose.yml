@@ -5,7 +5,7 @@ services:
     container_name: plausible
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-prod
       args:
         build_env: prod
     ports:

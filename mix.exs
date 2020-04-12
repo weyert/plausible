@@ -2,15 +2,29 @@ defmodule Plausible.MixProject do
   use Mix.Project
 
   def project do
+      [
+          app: :plausible,
+          version: "0.1.0",
+          elixir: "~> 1.5",
+          elixirc_paths: elixirc_paths(Mix.env()), compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+          start_permanent: Mix.env() == :prod,
+          aliases: aliases(),
+          deps: deps(),
+          test_coverage: [tool: ExCoveralls],
+
+          releases: releases()
+      ]
+  end
+
+  defp releases do
     [
-      app: :plausible,
-      version: "0.1.0",
-      elixir: "~> 1.5",
-      elixirc_paths: elixirc_paths(Mix.env()), compilers: [:phoenix, :gettext] ++ Mix.compilers(),
-      start_permanent: Mix.env() == :prod,
-      aliases: aliases(),
-      deps: deps(),
-      test_coverage: [tool: ExCoveralls]
+      plausible: [
+        include_executables_for: [:unix],
+        applications: [
+          # runtime_tools: :permanent,
+          plausible: :permanent,
+        ]
+      ]
     ]
   end
 
